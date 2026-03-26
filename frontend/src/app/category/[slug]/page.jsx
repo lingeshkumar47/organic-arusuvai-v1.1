@@ -5,7 +5,8 @@ import ProductCard from '../../../components/ProductCard';
 import { supabase } from '../../../lib/supabase';
 
 export default function CategoryPage({ params }) {
-  const isAll = params.slug === 'all';
+  const slug = params?.slug || 'all';
+  const isAll = slug === 'all';
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState({ name: isAll ? 'All Harvests' : 'Store', description: 'Premium selection' });
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ export default function CategoryPage({ params }) {
     async function fetchCategoryData() {
       // Get category info
       if (!isAll) {
-        const { data: catData } = await supabase.from('categories').select('*').eq('slug', params.slug).single();
+        const { data: catData } = await supabase.from('categories').select('*').eq('slug', slug).single();
         if (catData) setCategory(catData);
       }
 
@@ -49,7 +50,7 @@ export default function CategoryPage({ params }) {
       setLoading(false);
     }
     fetchCategoryData();
-  }, [params.slug, sortOrder, category.id]);
+  }, [slug, sortOrder, category.id]);
 
   return (
     <div className="bg-gray-50 min-h-screen pt-24 pb-20">
@@ -70,7 +71,7 @@ export default function CategoryPage({ params }) {
           </div>
 
           <div className="hidden md:flex text-[140px] relative z-10 opacity-80 drop-shadow-2xl hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-            {params.slug === 'spice' ? '🌶️' : params.slug === 'ready-mixes' ? '🥘' : '🌾'}
+            {slug === 'spice' ? '🌶️' : slug === 'ready-mixes' ? '🥘' : '🌾'}
           </div>
         </div>
       </div>
@@ -98,10 +99,10 @@ export default function CategoryPage({ params }) {
                       href={`/category/${t}`}
                       className="group flex justify-between items-center cursor-pointer"
                     >
-                      <span className={`text-sm font-bold transition-colors ${params.slug === t || (isAll && t === 'all') ? 'text-primary-600' : 'text-gray-500 group-hover:text-primary-900'}`}>
+                      <span className={`text-sm font-bold transition-colors ${slug === t || (isAll && t === 'all') ? 'text-primary-600' : 'text-gray-500 group-hover:text-primary-900'}`}>
                         {t === 'all' ? 'All Harvests' : t.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                       </span>
-                      {(params.slug === t || (isAll && t === 'all')) && <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />}
+                      {(slug === t || (isAll && t === 'all')) && <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />}
                     </Link>
                   ))}
                 </div>
