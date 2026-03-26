@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.pyo
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Environment files
+.env
+.env.local
+.env*.local
+frontend/.env.local
+frontend/.env*.local
+backend/.env
+
+# Build
+frontend/build/
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vercel
+.vercel
+
+# Docker volumes
+db_data/
+
+# Misc
+*.tsbuildinfo
+next-env.d.ts
+.gemini/
+.skills/
+antigravity_skills/
